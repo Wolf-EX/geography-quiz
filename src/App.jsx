@@ -9,15 +9,14 @@ import Warning from "./Components/Warning";
 function App() {
 
   const [options, setOptions] = useState([false, true]); //showCountry, showCapital
-  const [showModal, setShowModal] = useState(false); //showSettingMenu
+  const [showModal, setShowModal] = useState(false); // showSettingMenu
   const [showClearMenu, setShowClearMenu] = useState(false);
   const [hover, setHover] = useState();
   const [globeData, setGlobeData] = useState({features: []});
   const [countryData, setCountryData] = useState([]);
-  const [countryDataIndex, setCountryDataIndex] = useState(223);
-  const [capitalAnswer, setCapitalAnswer] = useState("");
+  const [countryDataIndex, setCountryDataIndex] = useState(0); //selected country
+  const [answerData, setAnswerData] = useState("");
   const [correctCountries, setCorrectCountries] = useState(new Set());
-  const [selectedCountryData, setSelectedCountryData] = useState({});
 
 
   const globeRef = useRef(null);
@@ -59,16 +58,15 @@ function App() {
     return () => {
       document.removeEventListener("mouseup", handleOuterClick);
     }
-  }, [modalRef])
+  }, [modalRef]);
 
   function handleSubmitClick(e) {
     e.preventDefault();
-    // console.log("selectedCountry", selectedCountryData);
-    if(capitalAnswer.toLowerCase() === countryData[countryDataIndex].city.toLowerCase()) {
+    if(answerData.toLowerCase() === countryData[countryDataIndex].city.toLowerCase()) {
       const updatedCorrectCountries = [...correctCountries, countryData[countryDataIndex].country];
       localStorage.setItem("correctCountries", JSON.stringify(updatedCorrectCountries));
       setCorrectCountries(new Set(updatedCorrectCountries));
-      setCapitalAnswer("");
+      setAnswerData("");
     }
   }
 
@@ -76,7 +74,6 @@ function App() {
   function handlePolygonClick(country) {
     const index = countryData.findIndex(e => e.country === country);
     if(countryData[index]) {
-      setSelectedCountryData(countryData[index]);
       setCountryDataIndex(index);
       setShowModal(true);
       inputRef.current && inputRef.current.focus();
@@ -95,20 +92,26 @@ function App() {
     setShowClearMenu(false);
   }
 
+  // console.log("countryData", countryData[countryDataIndex]);
+  // console.log("correct?", correctCountries.has(countryData[countryDataIndex].country))
+
   return (
     <>
       <h1 className="header-ui">{`Countries: ${correctCountries.size}\\${countryData.length}`}</h1>
-      <QuizForm
-        show={showModal}
-        modalRef={modalRef}
-        inputRef={inputRef}
-        countryData={selectedCountryData}
-        handleSubmit={handleSubmitClick}
-        handleNext={handleNextCountryClick}
-        isCorrect={correctCountries.has(selectedCountryData.country)}
-        capitalAnswer={capitalAnswer}
-        setCapitalAnswer={setCapitalAnswer}
-      />
+      {
+        countryData[countryDataIndex] &&
+        <QuizForm
+          show={showModal}
+          modalRef={modalRef}
+          inputRef={inputRef}
+          countryData={countryData[countryDataIndex]}
+          handleSubmit={handleSubmitClick}
+          handleNext={handleNextCountryClick}
+          isCorrect={correctCountries.has(countryData[countryDataIndex].country)}
+          answerData={answerData}
+          setAnswerData={setAnswerData}
+        />
+      }
       <OptionsMenu options={options} setOptions={setOptions} setShowClearMenu={setShowClearMenu}/>
       {
         showClearMenu && <Warning onClick={handleDeleteClick}/>
@@ -123,11 +126,11 @@ function App() {
         polygonCapColor={d => correctCountries.has(d.properties.ADMIN) ? "green" : d === hover ? 'steelblue' : 'lightyellow'}
         polygonSideColor={() => 'rgba(0, 100, 0, 0.15)'}
         polygonStrokeColor={() => '#111'}
-        polygonLabel={({ properties: d }) => <div>
-          <div><b>{d.ADMIN} ({d.ISO_A2}):</b></div>
-          {/* <div>GDP: <i>{d.GDP_MD_EST}</i> M$</div> */}
-          {/* <div>Population: <i>{d.POP_EST}</i></div> */}
-        </div>}
+        // polygonLabel={({ properties: d }) => <div>
+        //   <div><b>{d.ADMIN} ({d.ISO_A2}):</b></div>
+        //   {/* <div>GDP: <i>{d.GDP_MD_EST}</i> M$</div> */}
+        //   {/* <div>Population: <i>{d.POP_EST}</i></div> */}
+        // </div>}
         onPolygonHover={d => {isHover.current = !!d; return setHover(d)}}
         onPolygonClick={d => handlePolygonClick(d.properties.ADMIN)}
         polygonsTransitionDuration={300}

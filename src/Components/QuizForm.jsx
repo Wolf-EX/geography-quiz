@@ -1,6 +1,7 @@
 import Modal from "./Modal";
 
-export default function QuizForm({modalRef, inputRef, show, countryData, handleSubmit, handleNext, isCorrect, capitalAnswer, setCapitalAnswer}) {
+export default function QuizForm({modalRef, inputRef, show, countryData, handleSubmit, handleNext, isCorrect, answerData, setAnswerData}) {
+    // console.log("isCorrect", isCorrect)
     inputRef.current && inputRef.current.focus();
     return (
         <Modal ref={modalRef} className={"quiz-form-container"} show={show}>
@@ -20,8 +21,8 @@ export default function QuizForm({modalRef, inputRef, show, countryData, handleS
                             <input
                                 ref={inputRef}
                                 name="capitalInput"
-                                value={capitalAnswer}
-                                onChange={e => setCapitalAnswer(e.target.value)}
+                                value={answerData}
+                                onChange={e => setAnswerData(e.target.value)}
                                 placeholder="Enter Capital"
                                 autoFocus
                             />
