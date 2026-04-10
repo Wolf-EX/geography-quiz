@@ -6,7 +6,7 @@ import QuizForm from "./Components/QuizForm";
 import OptionsMenu from "./Components/OptionsMenu";
 import Warning from "./Components/Warning";
 
-function App() {
+export default function App() {
 
   const [options, setOptions] = useState([false, true]); //showCountry, showCapital
   const [showModal, setShowModal] = useState(false); // showSettingMenu
@@ -21,7 +21,10 @@ function App() {
 
   const globeRef = useRef(null);
   const modalRef = useRef(null);
-  const inputRef = useRef(null);
+  const countryInputRef = useRef(null);
+  const cityInputRef = useRef(null);
+
+  const inputRefs = [countryInputRef, cityInputRef]
 
   const isHover = useRef(hover);
 
@@ -76,7 +79,7 @@ function App() {
     if(countryData[index]) {
       setCountryDataIndex(index);
       setShowModal(true);
-      inputRef.current && inputRef.current.focus();
+      cityInputRef.current && cityInputRef.current.focus();
     }
   }
 
@@ -103,13 +106,14 @@ function App() {
         <QuizForm
           show={showModal}
           modalRef={modalRef}
-          inputRef={inputRef}
+          inputRef={inputRefs}
           countryData={countryData[countryDataIndex]}
           handleSubmit={handleSubmitClick}
           handleNext={handleNextCountryClick}
           isCorrect={correctCountries.has(countryData[countryDataIndex].country)}
           answerData={answerData}
           setAnswerData={setAnswerData}
+          options={options}
         />
       }
       <OptionsMenu options={options} setOptions={setOptions} setShowClearMenu={setShowClearMenu}/>
@@ -128,16 +132,12 @@ function App() {
         polygonStrokeColor={() => '#111'}
         // polygonLabel={({ properties: d }) => <div>
         //   <div><b>{d.ADMIN} ({d.ISO_A2}):</b></div>
-        //   {/* <div>GDP: <i>{d.GDP_MD_EST}</i> M$</div> */}
-        //   {/* <div>Population: <i>{d.POP_EST}</i></div> */}
         // </div>}
-        onPolygonHover={d => {isHover.current = !!d; return setHover(d)}}
         onPolygonClick={d => handlePolygonClick(d.properties.ADMIN)}
-        polygonsTransitionDuration={300}
+        onPolygonHover={d => {isHover.current = !!d; return setHover(d)}}
         // onGlobeClick={e => console.log(e)}
+        polygonsTransitionDuration={300}
       />
     </>
-  );
+  )
 }
-
-export default App
