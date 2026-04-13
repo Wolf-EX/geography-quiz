@@ -15,15 +15,18 @@ export default function OptionsMenu({options, setOptions, setShowClearMenu}) {
                 &#9881;
             </div>
             <div className="window settings-dropdown">
+                <header>OPTIONS</header>
                 <div className="toggle-container">
-                    <p>Name country</p>
-                    {/* <input type="checkbox" /> */}
+                    <p>Quiz country</p>
                     <Switch checked={options[0]} onChange={(e) => handleChange(e, 0)}/>
-                    <p>Name capital</p>
-                    {/* <input type="checkbox" /> */}
+                    {/* <p>Display country</p>
+                    <Switch checked={options[2]} onChange={(e) => handleChange(e, 2)}/> */}
+                    <p>Quiz capital</p>
                     <Switch checked={options[1]} onChange={(e) => handleChange(e, 1)}/>
-                </div>
+                    <p>Display capital</p>
+                    <Switch checked={options[3]} onChange={(e) => handleChange(e, 3)}/>
                 <button onClick={() => setShowClearMenu(true)}>Clear Data</button>
+                </div>
             </div>
         </Modal>
     );

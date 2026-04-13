@@ -1,11 +1,17 @@
-export default function QuizFormItem({text, countryData, answerData, inputRef, onChange, handleSubmit, isCorrect, showInput}) {
+export default function QuizFormItem({text, answer, answerData, inputRef, onChange, handleSubmit, isCorrect, showInput, showAnswer}) {
     return (
         <div className="capital-container">
-            <p>{text}: </p>
+            {
+                (showInput && !isCorrect) || showAnswer ?
+                <p>{text}: </p> :
+                null
+            }
             {
                 !showInput || isCorrect ?
-                <p>{countryData}</p> :
-                <form onSubmit={handleSubmit}>
+                showAnswer ?
+                <p>{answer}</p> :
+                null :
+                <div onSubmit={handleSubmit}>
                     <input
                         ref={inputRef}
                         name="capitalInput"
@@ -14,7 +20,7 @@ export default function QuizFormItem({text, countryData, answerData, inputRef, o
                         placeholder="Enter Capital"
                         autoFocus
                     />
-                </form>
+                </div>
             }
         </div>
     );

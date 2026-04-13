@@ -251,7 +251,7 @@
     },
     {
         "country": "Ethiopia",
-        "city": "Addis Abeba",
+        "city": "Addis Ababa",
         "continent": "Africa"
     },
     {
@@ -768,7 +768,8 @@
     {
         "country": "Democratic Republic of the Congo",
         "city": "Kinshasa",
-        "continent": "Africa"
+        "continent": "Africa",
+        "displayName": "DR Congo"
     },
     {
         "country": "Togo",

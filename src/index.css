@@ -71,6 +71,14 @@
 body {
 }
 
+header {
+  color: var(--text-h);
+  padding: 4px;
+  border-bottom: var(--window-border);
+  font-size: 20px;
+  font-weight: 800;
+}
+
 h2 {
   color: var(--text-h);
   padding-inline: 4px;

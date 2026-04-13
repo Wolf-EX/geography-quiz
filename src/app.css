@@ -33,7 +33,7 @@
 .settings-dropdown {
     visibility: hidden;
     opacity: 0;
-    transition: 
+    transition:
     opacity 0.1s ease-in-out,
     visibility 0.1s ease-in-out;
 }
@@ -43,9 +43,17 @@
     opacity: 1;
 }
 
-.settings-dropdown > button {
-    padding: 4px;
+/* .setting-dropdown > button */
+.toggle-container > button {
+    /* display: flex;
+    justify-content: center;
+    width: 100px; */
     color: red;
+    margin-block: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    /* text-align: center; */
+    /* line-height: 28px; */
 }
 
 .toggle-container {
@@ -65,8 +73,8 @@
 .quiz-header {
     display: flex;
     justify-content: space-between;
-    padding: 4px;
-    border-bottom: var(--window-border);
+    /* padding: 4px; */
+    /* border-bottom: var(--window-border); */
 }
 
 .quiz-header > button {

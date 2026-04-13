@@ -8,14 +8,14 @@ import Warning from "./Components/Warning";
 
 export default function App() {
 
-  const [options, setOptions] = useState([false, true]); //showCountry, showCapital
+  const [options, setOptions] = useState([false, true, false, false]); //showCountry, showCapital
   const [showModal, setShowModal] = useState(false); // showSettingMenu
   const [showClearMenu, setShowClearMenu] = useState(false);
   const [hover, setHover] = useState();
   const [globeData, setGlobeData] = useState({features: []});
   const [countryData, setCountryData] = useState([]);
   const [countryDataIndex, setCountryDataIndex] = useState(0); //selected country
-  const [answerData, setAnswerData] = useState("");
+  const [answerData, setAnswerData] = useState(["", ""]);
   const [correctCountries, setCorrectCountries] = useState(new Set());
 
 
@@ -65,11 +65,14 @@ export default function App() {
 
   function handleSubmitClick(e) {
     e.preventDefault();
-    if(answerData.toLowerCase() === countryData[countryDataIndex].city.toLowerCase()) {
+    if((!options[0] ||
+      answerData[0].toLowerCase() === countryData[countryDataIndex].displayName?.toLowerCase() ||
+      answerData[0].toLowerCase() === countryData[countryDataIndex].country.toLowerCase()) &&
+    (!options[1] || answerData[1].toLowerCase() === countryData[countryDataIndex].city.toLowerCase())) {
       const updatedCorrectCountries = [...correctCountries, countryData[countryDataIndex].country];
       localStorage.setItem("correctCountries", JSON.stringify(updatedCorrectCountries));
       setCorrectCountries(new Set(updatedCorrectCountries));
-      setAnswerData("");
+      setAnswerData(["", ""]);
     }
   }
 
@@ -79,7 +82,7 @@ export default function App() {
     if(countryData[index]) {
       setCountryDataIndex(index);
       setShowModal(true);
-      cityInputRef.current && cityInputRef.current.focus();
+      cityInputRef.current && cityInputRef.current.focus() || countryInputRef.current && countryInputRef.current.focus();
     }
   }
 
