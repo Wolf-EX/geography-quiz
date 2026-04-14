@@ -7,31 +7,25 @@ import OptionsMenu from "./Components/OptionsMenu";
 import Warning from "./Components/Warning";
 
 export default function App() {
-
-  const [options, setOptions] = useState([false, true, false, false]); //showCountry, showCapital
   const [showModal, setShowModal] = useState(false); // showSettingMenu
   const [showClearMenu, setShowClearMenu] = useState(false);
   const [hover, setHover] = useState();
-  const [globeData, setGlobeData] = useState({features: []});
+  const [options, setOptions] = useState([false, true, false, false]); //showCountry, showCapital
+  const [globeData, setGlobeData] = useState({features: []}); // try to merge this data into countryData
   const [countryData, setCountryData] = useState([]);
   const [countryDataIndex, setCountryDataIndex] = useState(0); //selected country
   const [answerData, setAnswerData] = useState(["", ""]);
   const [correctCountries, setCorrectCountries] = useState(new Set());
-
+  const [isWrongAnswer, setIsWrongAnswer] = useState(false);
+  
+  const isHover = useRef(hover);
 
   const globeRef = useRef(null);
   const modalRef = useRef(null);
   const countryInputRef = useRef(null);
   const cityInputRef = useRef(null);
 
-  const inputRefs = [countryInputRef, cityInputRef]
-
-  const isHover = useRef(hover);
-
-  function printData(data) {
-    // const temp = data.filter(d => d.properties.ISO_A2 === 'AQ');
-    console.log(data);
-  }
+  const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   useEffect(() => {
     fetch("/src/assets/datasets/ne_110m_admin_0_countries.geojson")
@@ -53,6 +47,8 @@ export default function App() {
     function handleOuterClick(event) {
       if(!isHover.current) {
         setShowModal(modalRef.current.contains(event.target));
+        setIsWrongAnswer(false);
+        setAnswerData(["", ""]);
       }
     }
 
@@ -63,8 +59,8 @@ export default function App() {
     }
   }, [modalRef]);
 
-  function handleSubmitClick(e) {
-    e.preventDefault();
+  function handleSubmitClick(event) {
+    event.preventDefault();
     if((!options[0] ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].displayName?.toLowerCase() ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].country.toLowerCase()) &&
@@ -73,21 +69,26 @@ export default function App() {
       localStorage.setItem("correctCountries", JSON.stringify(updatedCorrectCountries));
       setCorrectCountries(new Set(updatedCorrectCountries));
       setAnswerData(["", ""]);
+      setIsWrongAnswer(false);
+    } else {
+      setIsWrongAnswer(true);
     }
   }
 
-  // handleCountryClick
   function handlePolygonClick(country) {
     const index = countryData.findIndex(e => e.country === country);
     if(countryData[index]) {
       setCountryDataIndex(index);
       setShowModal(true);
+      setIsWrongAnswer(false);
       cityInputRef.current && cityInputRef.current.focus() || countryInputRef.current && countryInputRef.current.focus();
     }
   }
 
   function handleNextCountryClick(count) {
     handlePolygonClick(countryData[mod(countryDataIndex + count, countryData.length)].country);
+    setAnswerData(["", ""]);
+    setIsWrongAnswer(false);
   }
 
   function handleDeleteClick(deleteData) {
@@ -98,9 +99,6 @@ export default function App() {
     setShowClearMenu(false);
   }
 
-  // console.log("countryData", countryData[countryDataIndex]);
-  // console.log("correct?", correctCountries.has(countryData[countryDataIndex].country))
-
   return (
     <>
       <h1 className="header-ui">{`Countries: ${correctCountries.size}\\${countryData.length}`}</h1>
@@ -108,14 +106,14 @@ export default function App() {
         countryData[countryDataIndex] &&
         <QuizForm
           show={showModal}
-          modalRef={modalRef}
-          inputRef={inputRefs}
+          refs={[modalRef, countryInputRef, cityInputRef]}
           countryData={countryData[countryDataIndex]}
           handleSubmit={handleSubmitClick}
           handleNext={handleNextCountryClick}
-          isCorrect={correctCountries.has(countryData[countryDataIndex].country)}
           answerData={answerData}
           setAnswerData={setAnswerData}
+          isCorrect={correctCountries.has(countryData[countryDataIndex].country)}
+          isWrongAnswer={isWrongAnswer}
           options={options}
         />
       }
@@ -125,6 +123,7 @@ export default function App() {
       }
       <Globe
         ref={globeRef}
+        backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
         globeOffset={[0, 0]}
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
         polygonsData={globeData.features}

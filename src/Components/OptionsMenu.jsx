@@ -11,7 +11,7 @@ export default function OptionsMenu({options, setOptions, setShowClearMenu}) {
     }
     return (
         <Modal className="settings-ui">
-            <div className="animation icon">
+            <div className="icon rotate">
                 &#9881;
             </div>
             <div className="window settings-dropdown">

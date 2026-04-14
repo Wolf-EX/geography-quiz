@@ -1,9 +1,9 @@
-export default function QuizFormItem({text, answer, answerData, inputRef, onChange, handleSubmit, isCorrect, showInput, showAnswer}) {
+export default function QuizFormItem({text, answer, answerData, ref, onChange, handleSubmit, showInput, showAnswer, isCorrect, isWrongAnswer}) {
     return (
         <div className="capital-container">
             {
                 (showInput && !isCorrect) || showAnswer ?
-                <p>{text}: </p> :
+                <p>{text}:</p> :
                 null
             }
             {
@@ -13,7 +13,8 @@ export default function QuizFormItem({text, answer, answerData, inputRef, onChan
                 null :
                 <div onSubmit={handleSubmit}>
                     <input
-                        ref={inputRef}
+                        className={isWrongAnswer ? "wrong" : ""}
+                        ref={ref}
                         name="capitalInput"
                         value={answerData}
                         onChange={onChange}

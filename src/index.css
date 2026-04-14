@@ -1,18 +1,25 @@
 :root {
-  /* define variables */
-  --text: #756363;
-  --text-h: #08060d;
-  --bg: #fff;
+  --text: #ffffff;
+  --text-h: #f4f4f4;
+  --bg: #ffffff;
   --border: #e5e4e7;
-  --window-bg: #4e6374;
-  --window-border: 1px solid #1d3762;
+  --window-bg: #90badc;
+  --window-border: 1px solid #0c2143;
+  --button: #7a9db9;
+  --button-t: #8ed9f2;
+  --button-hover: #3c4d5c;
+  --button-active: #354552;
+  --icon: #000000;
+  
   --root-padding: 8px;
 
+  --treb: 'Trebuchet MS', sans-serif;
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
+  --cursive: 'Brush Script MT', cursive;
 
-  font: 18px/145% var(--sans);
+  font: 18px/145% var(--treb);
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -33,33 +40,27 @@
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
+    --window-bg: #4e6374;
+    --window-border: 1px solid #1d3762;
+    --button: #354552;
+    --button-t: #6eb2c8;
+    --button-hover: #3c4d5c;
+    --button-active: #354552;
+    --icon: #ffffff;
 
   }
 }
 
-@media (max-aspect-ratio: 3/4) {
+/* @media (max-aspect-ratio: 3/4) {
     :root {
   }
 
   .modal {
-    /* top: 50%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: max-content; */
+    width: max-content;
   }
-}
-
-/* targets root ID */
-/* #root {
-  display: flex;
-  flex-direction: row;
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  box-sizing: border-box;
 } */
 
 * {
@@ -68,11 +69,8 @@
   user-select: none;
 }
 
-body {
-}
-
 header {
-  color: var(--text-h);
+  color: var(--text);
   padding: 4px;
   border-bottom: var(--window-border);
   font-size: 20px;
@@ -90,11 +88,19 @@ p {
 
 button {
   width: 100%;
-  background-color: rgb(53, 69, 82);
-  color: rgb(110, 178, 200);
+  background-color: var(--button);
+  color: var(--button-t);
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--button-hover);  
+}
+
+button:active {
+  background-color: var(--button-active);
 }
 
 input {
@@ -109,22 +115,22 @@ input[type="checkbox"] {
   vertical-align: middle;
 }
 
-input:focus {
-  /* border-color: red; */
-}
-
-.animation {
+.rotate {
     opacity: .4;
     transition: 
     transform 0.2s ease-in-out,
     opacity 0.2s ease-in-out;
 }
 
-.animation:hover {
+.rotate:hover {
     transform: rotate(45deg);
     opacity: 1;
-    /* color: var(--text-shade); */
     cursor: pointer;
+}
+
+.wrong {
+  /* color: red; */
+  border-color: red;
 }
 
 .window {
