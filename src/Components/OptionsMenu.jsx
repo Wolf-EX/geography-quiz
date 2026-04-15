@@ -11,19 +11,24 @@ export default function OptionsMenu({options, setOptions, setShowClearMenu}) {
     }
     return (
         <Modal className="settings-ui">
-            <div className="animation icon">
+            <div className="icon rotate">
                 &#9881;
             </div>
             <div className="window settings-dropdown">
+                <header>OPTIONS</header>
                 <div className="toggle-container">
-                    <p>Name country</p>
-                    {/* <input type="checkbox" /> */}
+                    <p>Quiz country</p>
                     <Switch checked={options[0]} onChange={(e) => handleChange(e, 0)}/>
-                    <p>Name capital</p>
-                    {/* <input type="checkbox" /> */}
+                    {/* <p>Display country</p>
+                    <Switch checked={options[2]} onChange={(e) => handleChange(e, 2)}/> */}
+                    <p>Quiz capital</p>
                     <Switch checked={options[1]} onChange={(e) => handleChange(e, 1)}/>
-                </div>
+                    <p>Display capital</p>
+                    <Switch checked={options[3]} onChange={(e) => handleChange(e, 3)}/>
+                    <p>Country animation</p>
+                    <Switch checked={options[4]} onChange={(e) => handleChange(e, 4)}/>
                 <button onClick={() => setShowClearMenu(true)}>Clear Data</button>
+                </div>
             </div>
         </Modal>
     );

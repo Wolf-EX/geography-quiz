@@ -190,9 +190,10 @@
         "continent": "Europe"
     },
     {
-        "country": "Czech Republic",
+        "country": "Czechia",
         "city": "Prague",
-        "continent": "Europe"
+        "continent": "Europe",
+        "displayName": "Czech Republic"
     },
     {
         "country": "Denmark",
@@ -251,7 +252,7 @@
     },
     {
         "country": "Ethiopia",
-        "city": "Addis Abeba",
+        "city": "Addis Ababa",
         "continent": "Africa"
     },
     {
@@ -301,7 +302,7 @@
     },
     {
         "country": "Greece",
-        "city": "Athenai",
+        "city": "Athens",
         "continent": "Europe"
     },
     {
@@ -415,6 +416,11 @@
         "continent": "Africa"
     },
     {
+        "country": "Kosovo",
+        "city": "Pristina",
+        "continent": "Europe"
+    },
+    {
         "country": "Kuwait",
         "city": "Kuwait",
         "continent": "Asia/Middle East"
@@ -462,13 +468,14 @@
     },
     {
         "country": "Luxembourg",
-        "city": "Luxembourg",
+        "city": "Luxembourg City",
         "continent": "Europe"
     },
     {
-        "country": "North Macedonia",
+        "country": "Macedonia",
         "city": "Skopje",
-        "continent": "Europe"
+        "continent": "Europe",
+        "displayName": "North Macedonia"
     },
     {
         "country": "Madagascar",
@@ -671,9 +678,10 @@
         "continent": "Africa"
     },
     {
-        "country": "Serbia",
+        "country": "Republic of Serbia",
         "city": "Belgrade",
-        "continent": "Europe"
+        "continent": "Europe",
+        "displayName": "Serbia"
     },
     {
         "country": "Sierra Leone",
@@ -768,7 +776,8 @@
     {
         "country": "Democratic Republic of the Congo",
         "city": "Kinshasa",
-        "continent": "Africa"
+        "continent": "Africa",
+        "displayName": "DR Congo"
     },
     {
         "country": "Togo",
@@ -818,7 +827,7 @@
     {
         "country": "United States of America",
         "city": "Washington",
-        "continent":"North America"
+        "continent": "North America"
     },  
     {
         "country": "Uruguay",

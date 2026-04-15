@@ -1,38 +1,45 @@
 import Modal from "./Modal";
+import QuizFormItem from "./QuizFormItem";
 
-export default function QuizForm({modalRef, inputRef, show, countryData, handleSubmit, handleNext, isCorrect, answerData, setAnswerData}) {
-    // console.log("isCorrect", isCorrect)
-    inputRef.current && inputRef.current.focus();
+export default function QuizForm({refs, show, countryData, handleSubmit, handleNext, answerData, setAnswerData, isCorrect, isWrongAnswer, options}) {
+    const [modalRef, countryInputRef, cityInputRef] = refs;
     return (
         <Modal ref={modalRef} className={"quiz-form-container"} show={show}>
-            <div className="quiz-header">
+            <header className="quiz-header">
                 <button onClick={() => handleNext(-1)}>{"<"}</button>
                 <h2>{countryData.continent ? countryData.continent : "Set Continent"}</h2>
                 <button onClick={() => handleNext(1)}>{">"}</button>
-            </div>
-            <div className="quiz-answer-container">
-                <p>Country: {countryData.country}</p>
-                <div className="capital-container">
-                    <p>Capital: </p>
-                    {
-                        isCorrect ?
-                        <p>{countryData.city}</p> :
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                ref={inputRef}
-                                name="capitalInput"
-                                value={answerData}
-                                onChange={e => setAnswerData(e.target.value)}
-                                placeholder="Enter Capital"
-                                autoFocus
-                            />
-                        </form>
-                    }
-                </div>
-            </div>
-            {
-                !isCorrect && <button onClick={handleSubmit}>Enter</button>
-            }
+            </header>
+            <form>
+                {/* <p>Country: {countryData.country}</p> */}
+                <QuizFormItem
+                    text="Country"
+                    answer={countryData.displayName || countryData.country}
+                    answerData={answerData[0]}
+                    ref={countryInputRef}
+                    onChange={e => setAnswerData([e.target.value, answerData[1]])}
+                    handleSubmit={handleSubmit}
+                    showInput={options[0]}
+                    showAnswer={options[2]}
+                    isCorrect={isCorrect}
+                    isWrongAnswer={isWrongAnswer}
+                />
+                <QuizFormItem
+                    text="Capital"
+                    answer={countryData.city}
+                    answerData={answerData[1]}
+                    ref={cityInputRef}
+                    onChange={e => setAnswerData([answerData[0], e.target.value])}
+                    handleSubmit={handleSubmit}
+                    showInput={options[1]}
+                    showAnswer={options[3]}
+                    isCorrect={isCorrect}
+                    isWrongAnswer={isWrongAnswer}
+                />
+                {
+                    !isCorrect && (options[0] || options[1]) && <button className="submit-button" onClick={handleSubmit}>Enter</button>
+                }
+            </form>
         </Modal>
     )
 }
