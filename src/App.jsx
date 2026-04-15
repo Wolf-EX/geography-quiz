@@ -28,7 +28,7 @@ export default function App() {
   const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   useEffect(() => {   
-    fetch("src/assets/datasets/country-data.json")
+    fetch("datasets/country-data.json")
     .then(res => res.json())
     .then(data => setCountryData(data));
 
@@ -42,8 +42,6 @@ export default function App() {
   useEffect(() => {
     function handleOuterClick(event) {
       if(!isHover.current) {
-        // console.log(modalRef.current?.contains(event.target) || false)
-        // console.log(modalRef)
         setShowModal(modalRef.current?.contains(event.target) || false);
         setIsWrongAnswer(false);
         setAnswerData(["", ""]);
@@ -53,10 +51,6 @@ export default function App() {
       if(warningRef.current && !warningRef.current.contains(event.target)) {
         setShowClearMenu(false);
       }
-
-      // if(warningRef.current && !warningRef.current.contains(event.target)) {
-      //   setShowClearMenu(false);
-      // }
     }
 
     document.addEventListener("mouseup", handleOuterClick);
@@ -135,7 +129,6 @@ export default function App() {
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
         polygonsData={countryData}
         polygonAltitude={options[4] ? d => d === countryData[countryDataIndex] ? 0.05 : d === hover ? 0.03 : 0.01 : 0.01}
-        // polygonCapColor={d => d === hover ? 'steelblue' : 'lightyellow'}
         polygonCapColor={d => correctCountries.has(d.country) ? "green" : d === hover ? 'steelblue' : 'lightyellow'}
         polygonSideColor={() => 'rgba(0, 100, 0, 0.15)'}
         polygonStrokeColor={() => '#111'}
@@ -144,7 +137,6 @@ export default function App() {
         // </div>}
         onPolygonClick={d => handlePolygonClick(d.country)}
         onPolygonHover={d => {isHover.current = !!d; return setHover(d)}}
-        // onGlobeClick={e => console.log(e)}
         polygonsTransitionDuration={300}
       />
     </>
