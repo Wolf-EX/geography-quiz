@@ -2,8 +2,6 @@ import Modal from "./Modal";
 import QuizFormItem from "./QuizFormItem";
 
 export default function QuizForm({refs, show, countryData, handleSubmit, handleNext, answerData, setAnswerData, isCorrect, isWrongAnswer, options}) {
-    // console.log("isCorrect", isCorrect)
-    // inputRef.current && inputRef.current.focus();
     const [modalRef, countryInputRef, cityInputRef] = refs;
     return (
         <Modal ref={modalRef} className={"quiz-form-container"} show={show}>

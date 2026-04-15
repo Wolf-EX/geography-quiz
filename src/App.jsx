@@ -22,6 +22,7 @@ export default function App() {
 
   const globeRef = useRef(null);
   const modalRef = useRef(null);
+  const warningRef = useRef(null);
   const countryInputRef = useRef(null);
   const cityInputRef = useRef(null);
 
@@ -32,7 +33,7 @@ export default function App() {
     .then(res => res.json())
     .then(setGlobeData);
     
-    fetch("/src/assets/datasets/country-by-capital-city.json")
+    fetch("/src/assets/datasets/country-data.json")
     .then(res => res.json())
     .then(data => setCountryData(data));
 
@@ -50,6 +51,10 @@ export default function App() {
         setIsWrongAnswer(false);
         setAnswerData(["", ""]);
       }
+
+      // if(warningRef.current && !warningRef.current.contains(event.target)) {
+      //   setShowClearMenu(false);
+      // }
     }
 
     document.addEventListener("mouseup", handleOuterClick);
@@ -76,7 +81,8 @@ export default function App() {
   }
 
   function handlePolygonClick(country) {
-    const index = countryData.findIndex(e => e.country === country);
+    console.log(countryData[0].country, country)
+    const index = countryData.findIndex(e => e?.country === country);
     if(countryData[index]) {
       setCountryDataIndex(index);
       setShowModal(true);
@@ -119,7 +125,7 @@ export default function App() {
       }
       <OptionsMenu options={options} setOptions={setOptions} setShowClearMenu={setShowClearMenu}/>
       {
-        showClearMenu && <Warning onClick={handleDeleteClick}/>
+        showClearMenu && <Warning ref={warningRef} onClick={handleDeleteClick}/>
       }
       <Globe
         ref={globeRef}
