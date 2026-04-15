@@ -28,7 +28,7 @@ export default function App() {
   const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   useEffect(() => {   
-    fetch("/src/assets/datasets/country-data.json")
+    fetch("src/assets/datasets/country-data.json")
     .then(res => res.json())
     .then(data => setCountryData(data));
 
