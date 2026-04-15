@@ -35,8 +35,7 @@ export default function App() {
     globeRef.current && globeRef.current.pointOfView({ lat: 41, lng: -95, altitude: 1.5 }, 2000); // 2000ms transition
 
     setCorrectCountries(new Set(JSON.parse(localStorage.getItem("correctCountries"))));
-    setOptions(JSON.parse(localStorage.getItem("options")));
-      
+    setOptions(JSON.parse(localStorage.getItem("options")) || [false, true, false, false, true]);
   }, []);
 
   useEffect(() => {
