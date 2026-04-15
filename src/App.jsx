@@ -130,7 +130,6 @@ export default function App() {
         globeOffset={[0, 0]}
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
         polygonsData={countryData}
-        // polygonAltitude={d => d === countryData[countryDataIndex] ? 0.05 : d === hover ? 0.03 : 0.01}
         polygonAltitude={options[4] ? d => d === countryData[countryDataIndex] ? 0.05 : d === hover ? 0.03 : 0.01 : 0.01}
         // polygonCapColor={d => d === hover ? 'steelblue' : 'lightyellow'}
         polygonCapColor={d => correctCountries.has(d.country) ? "green" : d === hover ? 'steelblue' : 'lightyellow'}
