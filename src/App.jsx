@@ -50,9 +50,9 @@ export default function App() {
         setCountryDataIndex(null);
       }
 
-      // if(warningRef.current && !warningRef.current.contains(event.target)) {
-      //   setShowClearMenu(false);
-      // }
+      if(warningRef.current && !warningRef.current.contains(event.target)) {
+        setShowClearMenu(false);
+      }
     }
 
     document.addEventListener("mouseup", handleOuterClick);
