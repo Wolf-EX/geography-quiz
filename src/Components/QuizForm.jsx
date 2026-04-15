@@ -20,7 +20,7 @@ export default function QuizForm({refs, show, countryData, handleSubmit, handleN
                     onChange={e => setAnswerData([e.target.value, answerData[1]])}
                     handleSubmit={handleSubmit}
                     showInput={options[0]}
-                    showAnswer={options[2]}
+                    showAnswer={true}
                     isCorrect={isCorrect}
                     isWrongAnswer={isWrongAnswer}
                 />
@@ -32,7 +32,7 @@ export default function QuizForm({refs, show, countryData, handleSubmit, handleN
                     onChange={e => setAnswerData([answerData[0], e.target.value])}
                     handleSubmit={handleSubmit}
                     showInput={options[1]}
-                    showAnswer={options[3]}
+                    showAnswer={options[2]}
                     isCorrect={isCorrect}
                     isWrongAnswer={isWrongAnswer}
                 />

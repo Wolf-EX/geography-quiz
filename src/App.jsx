@@ -10,7 +10,7 @@ export default function App() {
   const [showModal, setShowModal] = useState(false); // showSettingMenu
   const [showClearMenu, setShowClearMenu] = useState(false);
   const [hover, setHover] = useState(null);
-  const [options, setOptions] = useState([false, true, false, false, true]); //showCountry, showCapital
+  const [options, setOptions] = useState([true, true, true, true]); // quiz country, quiz capital, display capital, country animation
   const [countryData, setCountryData] = useState([]);
   const [countryDataIndex, setCountryDataIndex] = useState(null); //selected country
   const [answerData, setAnswerData] = useState(["", ""]);
