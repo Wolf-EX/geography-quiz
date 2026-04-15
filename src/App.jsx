@@ -9,11 +9,10 @@ import Warning from "./Components/Warning";
 export default function App() {
   const [showModal, setShowModal] = useState(false); // showSettingMenu
   const [showClearMenu, setShowClearMenu] = useState(false);
-  const [hover, setHover] = useState();
-  const [options, setOptions] = useState([false, true, false, false]); //showCountry, showCapital
-  const [globeData, setGlobeData] = useState({features: []}); // try to merge this data into countryData
+  const [hover, setHover] = useState(null);
+  const [options, setOptions] = useState([false, true, false, false, true]); //showCountry, showCapital
   const [countryData, setCountryData] = useState([]);
-  const [countryDataIndex, setCountryDataIndex] = useState(0); //selected country
+  const [countryDataIndex, setCountryDataIndex] = useState(null); //selected country
   const [answerData, setAnswerData] = useState(["", ""]);
   const [correctCountries, setCorrectCountries] = useState(new Set());
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
@@ -28,11 +27,7 @@ export default function App() {
 
   const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  useEffect(() => {
-    fetch("/src/assets/datasets/ne_110m_admin_0_countries.geojson")
-    .then(res => res.json())
-    .then(setGlobeData);
-    
+  useEffect(() => {   
     fetch("/src/assets/datasets/country-data.json")
     .then(res => res.json())
     .then(data => setCountryData(data));
@@ -47,9 +42,12 @@ export default function App() {
   useEffect(() => {
     function handleOuterClick(event) {
       if(!isHover.current) {
-        setShowModal(modalRef.current.contains(event.target));
+        // console.log(modalRef.current?.contains(event.target) || false)
+        // console.log(modalRef)
+        setShowModal(modalRef.current?.contains(event.target) || false);
         setIsWrongAnswer(false);
         setAnswerData(["", ""]);
+        setCountryDataIndex(null);
       }
 
       // if(warningRef.current && !warningRef.current.contains(event.target)) {
@@ -81,7 +79,6 @@ export default function App() {
   }
 
   function handlePolygonClick(country) {
-    console.log(countryData[0].country, country)
     const index = countryData.findIndex(e => e?.country === country);
     if(countryData[index]) {
       setCountryDataIndex(index);
@@ -132,16 +129,17 @@ export default function App() {
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
         globeOffset={[0, 0]}
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
-        polygonsData={globeData.features}
-        // polygonAltitude={d => d === hoverD ? 0.12 : 0.06}
+        polygonsData={countryData}
+        // polygonAltitude={d => d === countryData[countryDataIndex] ? 0.05 : d === hover ? 0.03 : 0.01}
+        polygonAltitude={options[4] ? d => d === countryData[countryDataIndex] ? 0.05 : d === hover ? 0.03 : 0.01 : 0.01}
         // polygonCapColor={d => d === hover ? 'steelblue' : 'lightyellow'}
-        polygonCapColor={d => correctCountries.has(d.properties.ADMIN) ? "green" : d === hover ? 'steelblue' : 'lightyellow'}
+        polygonCapColor={d => correctCountries.has(d.country) ? "green" : d === hover ? 'steelblue' : 'lightyellow'}
         polygonSideColor={() => 'rgba(0, 100, 0, 0.15)'}
         polygonStrokeColor={() => '#111'}
-        // polygonLabel={({ properties: d }) => <div>
-        //   <div><b>{d.ADMIN} ({d.ISO_A2}):</b></div>
+        // polygonLabel={d=> <div>
+        //   <div><b>{d.country}</b></div>
         // </div>}
-        onPolygonClick={d => handlePolygonClick(d.properties.ADMIN)}
+        onPolygonClick={d => handlePolygonClick(d.country)}
         onPolygonHover={d => {isHover.current = !!d; return setHover(d)}}
         // onGlobeClick={e => console.log(e)}
         polygonsTransitionDuration={300}
