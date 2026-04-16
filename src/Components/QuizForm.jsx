@@ -4,7 +4,7 @@ import QuizFormItem from "./QuizFormItem";
 export default function QuizForm({refs, show, countryData, handleSubmit, handleNext, answerData, setAnswerData, isCorrect, isWrongAnswer, options}) {
     const [modalRef, countryInputRef, cityInputRef] = refs;
     return (
-        <Modal ref={modalRef} className={"quiz-form-container"} show={show}>
+        <Modal ref={modalRef} className={"quiz-form-container"} show={true}>
             <header className="quiz-header">
                 <button onClick={() => handleNext(-1)}>{"<"}</button>
                 <h2>{countryData.continent ? countryData.continent : "Set Continent"}</h2>

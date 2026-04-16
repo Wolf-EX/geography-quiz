@@ -7,10 +7,9 @@ import OptionsMenu from "./Components/OptionsMenu";
 import Warning from "./Components/Warning";
 
 export default function App() {
-  const [showModal, setShowModal] = useState(false);
   const [showClearMenu, setShowClearMenu] = useState(false);
-  const [hover, setHover] = useState(null);
   const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight]);
+  const [hover, setHover] = useState(null);
   const [options, setOptions] = useState([true, true, true, true]); // [quiz country, quiz capital, display capital, country animation]
   const [countryData, setCountryData] = useState([]);
   const [countryDataIndex, setCountryDataIndex] = useState(null); // selected country index
@@ -49,12 +48,12 @@ export default function App() {
 
   useEffect(() => {
     function handleOuterClick(event) {
-      if(!isHover.current) {
-        setShowModal(modalRef.current?.contains(event.target) || false);
-        setIsWrongAnswer(false);
-        setAnswerData(["", ""]);
+      if(!isHover.current && !modalRef.current?.contains(event.target)) {
         setCountryDataIndex(null);
+        setAnswerData(["", ""]);
+        setIsWrongAnswer(false);
       }
+      
 
       if(warningRef.current && !warningRef.current.contains(event.target)) {
         setShowClearMenu(false);
@@ -68,8 +67,9 @@ export default function App() {
     }
   }, [modalRef]);
 
-  function handleSubmitClick(event) {
+  function handleSubmit(event) {
     event.preventDefault();
+    console.log("clicked", answerData)
     if((!options[0] ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].displayName?.toLowerCase() ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].country.toLowerCase()) &&
@@ -88,7 +88,6 @@ export default function App() {
     const index = countryData.findIndex(e => e?.country === country);
     if(countryData[index]) {
       setCountryDataIndex(index);
-      setShowModal(true);
       setIsWrongAnswer(false);
       cityInputRef.current && cityInputRef.current.focus() || countryInputRef.current && countryInputRef.current.focus();
     }
@@ -116,10 +115,9 @@ export default function App() {
       {
         countryData[countryDataIndex] &&
         <QuizForm
-          show={showModal}
           refs={[modalRef, countryInputRef, cityInputRef]}
           countryData={countryData[countryDataIndex]}
-          handleSubmit={handleSubmitClick}
+          handleSubmit={handleSubmit}
           handleNext={handleNextCountryClick}
           answerData={answerData}
           setAnswerData={setAnswerData}
