@@ -69,7 +69,6 @@ export default function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("clicked", answerData)
     if((!options[0] ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].displayName?.toLowerCase() ||
       answerData[0].toLowerCase() === countryData[countryDataIndex].country.toLowerCase()) &&
