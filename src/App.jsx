@@ -7,13 +7,14 @@ import OptionsMenu from "./Components/OptionsMenu";
 import Warning from "./Components/Warning";
 
 export default function App() {
-  const [showModal, setShowModal] = useState(false); // showSettingMenu
+  const [showModal, setShowModal] = useState(false);
   const [showClearMenu, setShowClearMenu] = useState(false);
   const [hover, setHover] = useState(null);
-  const [options, setOptions] = useState([true, true, true, true]); // quiz country, quiz capital, display capital, country animation
+  const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight]);
+  const [options, setOptions] = useState([true, true, true, true]); // [quiz country, quiz capital, display capital, country animation]
   const [countryData, setCountryData] = useState([]);
-  const [countryDataIndex, setCountryDataIndex] = useState(null); //selected country
-  const [answerData, setAnswerData] = useState(["", ""]);
+  const [countryDataIndex, setCountryDataIndex] = useState(null); // selected country index
+  const [answerData, setAnswerData] = useState(["", ""]); // [country, capital]
   const [correctCountries, setCorrectCountries] = useState(new Set());
   const [isWrongAnswer, setIsWrongAnswer] = useState(false);
   
@@ -27,15 +28,23 @@ export default function App() {
 
   const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  useEffect(() => {   
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    }
+
     fetch("datasets/country-data.json")
     .then(res => res.json())
     .then(data => setCountryData(data));
 
-    globeRef.current && globeRef.current.pointOfView({ lat: 41, lng: -95, altitude: 1.5 }, 2000); // 2000ms transition
-
     setCorrectCountries(new Set(JSON.parse(localStorage.getItem("correctCountries"))));
     setOptions(JSON.parse(localStorage.getItem("options")) || [false, true, false, false, true]);
+    
+    globeRef.current && globeRef.current.pointOfView({ lat: 41, lng: -95, altitude: 1.5 }, 1500); // 1000ms transition
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -101,7 +110,9 @@ export default function App() {
 
   return (
     <>
-      <h1 className="header-ui">{`Countries: ${correctCountries.size}\\${countryData.length}`}</h1>
+      <div className="header-ui">
+        <h1>{`Countries: ${correctCountries.size}\\${countryData.length}`}</h1>
+      </div>
       {
         countryData[countryDataIndex] &&
         <QuizForm
@@ -123,6 +134,8 @@ export default function App() {
       }
       <Globe
         ref={globeRef}
+        width={windowSize[0]}
+        height={windowSize[1]}
         backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
         globeOffset={[0, 0]}
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
