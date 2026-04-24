@@ -27,6 +27,7 @@
 }
 
 .settings-dropdown {
+    padding-block: .35em;
     visibility: hidden;
     opacity: 0;
     transition:
@@ -65,6 +66,7 @@
 .quiz-header {
     display: flex;
     justify-content: space-between;
+    font-size: 20px;
     /* padding: 4px; */
     /* border-bottom: var(--window-border); */
 }

@@ -7,7 +7,7 @@ export default function QuizForm({refs, show, countryData, handleSubmit, handleN
         <Modal ref={modalRef} className={"quiz-form-container"} show={true}>
             <header className="quiz-header">
                 <button onClick={() => handleNext(-1)}>{"<"}</button>
-                <h2>{countryData.continent ? countryData.continent : "Set Continent"}</h2>
+                {countryData.continent ? countryData.continent : "Set Continent"}
                 <button onClick={() => handleNext(1)}>{">"}</button>
             </header>
             <form>

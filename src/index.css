@@ -36,7 +36,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #d7d8ef;
-    --text-h: #0b485d;
+    --text-h: #ebf2ff;
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
@@ -71,19 +71,20 @@
 }
 
 header {
-  color: var(--text);
-  padding: 0.2em;
+  color: var(--text-h);
+  padding-bottom: 0.25em;
   border-bottom: var(--window-border);
-  /* font-size: 20px; */
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 h2 {
-  color: var(--text);
+  color: var(--text-h);
   padding-inline: 0.2em;
 }
 
 p {
+  color: var(--text);
   text-align: left;
 }
 
