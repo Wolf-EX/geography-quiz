@@ -133,7 +133,7 @@ export default function App() {
         ref={globeRef}
         width={windowSize[0]}
         height={windowSize[1]}
-        backgroundColor={isDarkMode ? "#000000" : "#ffffff"}
+        backgroundColor={isDarkMode ? "#060912" : "#bbcdf3"}
         globeOffset={[0, 0]}
         globeImageUrl="//cdn.jsdelivr.net/npm/three-globe/example/img/earth-day.jpg"
         polygonsData={countryData}
